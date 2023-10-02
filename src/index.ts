@@ -1,7 +1,7 @@
 console.log('Begin game of life');
 let boardSize = 5;
-let numOfGenerations = 5;
-let initialValue = "block";
+let numOfGenerations = 10;
+let initialValue = "bee-hive"; // "block", "bee-hive", "loaf"
 let board = initBoard(initialValue);
 printBoard(board);
 
@@ -37,6 +37,16 @@ function initBoard(boardSize: string) {
             [0, 1, 0, 0, 1, 0],
             [0, 0, 1, 1, 0, 0],
             [0, 0, 0, 0, 0, 0]
+        ]
+    }
+    else if (boardSize == "loaf"){
+        return [
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 1, 1, 0, 0],
+            [0, 1, 0, 0, 1, 0],
+            [0, 0, 1, 0, 1, 0],
+            [0, 0, 0, 1, 0, 0],
+            [0, 0, 0, 0, 0, 0],
         ]
     }
     else {
