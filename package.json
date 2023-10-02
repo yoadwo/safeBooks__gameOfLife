@@ -1,0 +1,18 @@
+{
+  "name": "gameoflife",
+  "version": "1.0.0",
+  "description": "yoads implementation to game of life",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "npx nodemon"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
