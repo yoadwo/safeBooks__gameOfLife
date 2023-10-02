@@ -1,7 +1,7 @@
 console.log('Begin game of life');
 let boardSize = 5;
-let numOfGenerations = 10;
-let initialValue = "bee-hive"; // "block", "bee-hive", "loaf"
+let numOfGenerations = 15;
+let initialValue = "loaf"; // "block", "bee-hive", "loaf"
 let board = initBoard(initialValue);
 printBoard(board);
 
