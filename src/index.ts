@@ -1,8 +1,8 @@
 console.log('Begin game of life');
 let boardSize = 5;
-let numOfGenerations = 15;
-let initialValue = "loaf"; // "block", "bee-hive", "loaf"
-let board = initBoard(initialValue);
+let numOfGenerations = 5;
+let initialValue = "random"; // "block", "bee-hive", "loaf", "random"
+let board = initBoard(initialValue, boardSize);
 printBoard(board);
 
 for (let i = 1; i <= numOfGenerations; i++) {
@@ -12,8 +12,8 @@ for (let i = 1; i <= numOfGenerations; i++) {
 }
 
 // init a board of size boardSize x boardSize
-function initBoard(boardSize: string) {
-    let board = [[]];
+function initBoard(boardType: string, boardSize: number | undefined) {
+    let board: Array<Array<number>>;
     // let board = new Array(boardSize);
     // for (let i = 0; i < boardSize; i++) {
     //     board[i] = new Array(boardSize);
@@ -22,7 +22,7 @@ function initBoard(boardSize: string) {
     //         board[i][j] = Math.floor(Math.random() * 2);
     //     }
     // }
-    if (boardSize === "block") {
+    if (boardType === "block") {
         return [
             [0, 0, 0, 0],
             [0, 1, 1, 0],
@@ -30,7 +30,7 @@ function initBoard(boardSize: string) {
             [0, 0, 0, 0],
         ]
     }
-    else if (boardSize === "bee-hive") {
+    else if (boardType === "bee-hive") {
         return [
             [0, 0, 0, 0, 0, 0],
             [0, 0, 1, 1, 0, 0],
@@ -39,7 +39,7 @@ function initBoard(boardSize: string) {
             [0, 0, 0, 0, 0, 0]
         ]
     }
-    else if (boardSize == "loaf"){
+    else if (boardType == "loaf"){
         return [
             [0, 0, 0, 0, 0, 0],
             [0, 0, 1, 1, 0, 0],
@@ -50,14 +50,15 @@ function initBoard(boardSize: string) {
         ]
     }
     else {
-        // let board = new Array(boardSize);
-    // for (let i = 0; i < boardSize; i++) {
-    //     board[i] = new Array(boardSize);
-    //     for (let j = 0; j < boardSize; j++) {
-    //         // random between 0 and 1
-    //         board[i][j] = Math.floor(Math.random() * 2);
-    //     }
-    // }
+        console.log('calling random board with size '+ boardSize);
+        board = new Array(boardSize!);
+        for (let i = 0; i < boardSize!; i++) {
+            board[i] = new Array(boardSize);
+            for (let j = 0; j < boardSize!; j++) {
+                // random between 0 and 1
+                board[i][j] = Math.floor(Math.random() * 2);
+            }
+        }
     }
     return board;
 }
@@ -72,26 +73,31 @@ function printBoard(board: Array<Array<number>>) {
 }
 
 function nextGeneration(board: Array<Array<number>>) {
-    for (let row = 0; row < board.length - 1; row++) {
-        for (let col = 0; col < board[row].length - 1; col++){
+    for (let row = 0; row < board.length; row++) {
+        for (let col = 0; col < board[row].length; col++){
             // count alive neighbours
             let aliveCount = countAliveNeighbours(board, row, col);
 
-            // Any live cell with two or three live neighbours survives.
-            if (board[row][col] == 1 && (aliveCount === 3 || aliveCount === 2)) { 
-                board[row][col] = 1;
-            }
-            // Any dead cell with three live neighbours becomes a live cell.
-            if (board[row][col] == 0 && aliveCount === 3) {
-                board[row][col] = 1;
-            }
-            // Any live cell with more than three live neighbours dies
-            if (board[row][col] == 1 && aliveCount > 3) { 
+            // Any live cell with fewer than two live neighbours dies, as if by underpopulation.
+            if (board[row][col] === 1 && aliveCount < 2) {
                 board[row][col] = 0;
+                //console.log(board[row][col] + ' Starved');
+            }
+            // Any live cell with two or three live neighbours survives.
+            else if (board[row][col] === 1 && (aliveCount === 3 || aliveCount === 2)) { 
+                board[row][col] = 1;
+                //console.log(board[row][col] + ' Survived');
+            }
+            
+            // Any live cell with more than three live neighbours dies
+            else if (board[row][col] === 1 && aliveCount > 3) { 
+                board[row][col] = 0;
+                //console.log(board[row][col] + ' Died');
             }
             // Any dead cell with exactly three live neighbours becomes a live cell
-            if (board[row][col] == 0 && aliveCount === 3) {
+            else if (board[row][col] === 0 && aliveCount === 3) {
                 board[row][col] = 1;
+                //console.log(board[row][col] + ' Born');
             }
         }
     }
