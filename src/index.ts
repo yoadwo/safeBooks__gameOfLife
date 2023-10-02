@@ -1,7 +1,8 @@
 console.log('Begin game of life');
 let boardSize = 5;
 let numOfGenerations = 5;
-let board = initBoard(boardSize);
+let initialValue = "block";
+let board = initBoard(initialValue);
 printBoard(board);
 
 for (let i = 1; i <= numOfGenerations; i++) {
@@ -11,14 +12,43 @@ for (let i = 1; i <= numOfGenerations; i++) {
 }
 
 // init a board of size boardSize x boardSize
-function initBoard(boardSize: number) {
-    let board = new Array(boardSize);
-    for (let i = 0; i < boardSize; i++) {
-        board[i] = new Array(boardSize);
-        for (let j = 0; j < boardSize; j++) {
-            // random between 0 and 1
-            board[i][j] = Math.floor(Math.random() * 2);
-        }
+function initBoard(boardSize: string) {
+    let board = [[]];
+    // let board = new Array(boardSize);
+    // for (let i = 0; i < boardSize; i++) {
+    //     board[i] = new Array(boardSize);
+    //     for (let j = 0; j < boardSize; j++) {
+    //         // random between 0 and 1
+    //         board[i][j] = Math.floor(Math.random() * 2);
+    //     }
+    // }
+    if (boardSize === "block") {
+        return [
+            [0, 0, 0, 0],
+            [0, 1, 1, 0],
+            [0, 1, 1, 0],
+            [0, 0, 0, 0],
+        ]
+    }
+    else if (boardSize === "bee-hive") {
+        return [
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0],
+        ]
+    }
+    else {
+        // let board = new Array(boardSize);
+    // for (let i = 0; i < boardSize; i++) {
+    //     board[i] = new Array(boardSize);
+    //     for (let j = 0; j < boardSize; j++) {
+    //         // random between 0 and 1
+    //         board[i][j] = Math.floor(Math.random() * 2);
+    //     }
+    // }
     }
     return board;
 }
