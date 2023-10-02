@@ -33,8 +33,8 @@ function printBoard(board: Array<Array<number>>) {
 }
 
 function nextGeneration(board: Array<Array<number>>) {
-    for (let row = 1; row < board.length - 1; row++) {
-        for (let col = 1; col < board[row].length - 1; col++){
+    for (let row = 0; row < board.length - 1; row++) {
+        for (let col = 0; col < board[row].length - 1; col++){
             // count alive neighbours
             let aliveCount = countAliveNeighbours(board, row, col);
 
@@ -60,13 +60,46 @@ function nextGeneration(board: Array<Array<number>>) {
 }
 function countAliveNeighbours(board: number[][], row: number, col: number): number {
     let aliveNeighbours = 0;
-    for (let i = -1; i <= 1; i++){
-        for (let j = -1; j <= 1; j++){
-            aliveNeighbours += board[row + i][col + j];
-        }
+
+    // check top left
+    if (board[row-1] != null && board[row-1][col-1] != null && board[row-1][col-1] == 1){
+        aliveNeighbours++;
     }
-    // don't count self
-    aliveNeighbours -= board[row][col];
+
+    // check top
+    if (board[row-1] != null && board[row-1][col] != null && board[row-1][col] == 1){
+        aliveNeighbours++;
+    }
+
+    // check top right
+    if (board[row-1] != null && board[row-1][col+1] != null && board[row-1][col+1] == 1){
+        aliveNeighbours++;
+    }
+
+    // check left
+    if (board[row] != null && board[row][col-1] != null && board[row][col-1] == 1){
+        aliveNeighbours++;
+    }
+
+    // check right
+    if (board[row] != null && board[row][col+1] != null && board[row][col+1] == 1){
+        aliveNeighbours++;
+    }
+
+    // check bottom left
+    if (board[row+1] != null && board[row+1][col-1] != null && board[row+1][col-1] == 1){
+        aliveNeighbours++;
+    }
+
+    // check bottom
+    if (board[row+1] != null && board[row+1][col] != null && board[row+1][col] == 1){
+        aliveNeighbours++;
+    }
+
+    // check bottom right
+    if (board[row+1] != null && board[row+1][col+1] != null && board[row+1][col+1] == 1){
+        aliveNeighbours++;
+    }
 
     //console.log(`(${row},${col}): ${aliveNeighbours}`);
     return aliveNeighbours;        

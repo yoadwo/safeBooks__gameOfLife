@@ -8,6 +8,6 @@ run `npm install`
 # run
 in your console, run `npm run start:dev`
 
-# todo:
+# todo
 1. allow infinite generations
 2. allow other start patterns
